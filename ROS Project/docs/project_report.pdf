@@ -1,0 +1,121 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [6 0 R 8 0 R 10 0 R] /Count 3 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Length 2884 >>
+stream
+BT /F2 22 Tf 54 730 Td (TurtleBot3 Autonomous Navigation Pipeline) Tj ET
+BT /F2 14 Tf 54 679 Td (Overview) Tj ET
+BT /F1 10.5 Tf 54 652 Td (This project implements an autonomous navigation pipeline for a TurtleBot3) Tj ET
+BT /F1 10.5 Tf 54 634 Td (mobile robot in a simulated indoor environment. The system connects ROS 2) Tj ET
+BT /F1 10.5 Tf 54 616 Td (communication, occupancy-map based planning, path optimization, and trajectory) Tj ET
+BT /F1 10.5 Tf 54 598 Td (tracking into a single workflow that can be launched from MATLAB while using) Tj ET
+BT /F1 10.5 Tf 54 580 Td (Gazebo and RViz for simulation and visualization.) Tj ET
+BT /F1 10.5 Tf 54 557 Td (The goal of the project is to drive a differential-drive robot from its current) Tj ET
+BT /F1 10.5 Tf 54 539 Td (odometry pose to an operator-selected RViz goal while avoiding occupied map) Tj ET
+BT /F1 10.5 Tf 54 521 Td (regions and producing velocity commands on /cmd_vel.) Tj ET
+BT /F2 14 Tf 54 490 Td (System Architecture) Tj ET
+BT /F1 10.5 Tf 54 463 Td (The implementation is organized around four layers:) Tj ET
+BT /F1 10.5 Tf 72 440 Td (* ROS 2 interface: subscribes to odometry and RViz goal poses, and publishes) Tj ET
+BT /F1 10.5 Tf 54 423 Td (velocity commands for the robot.) Tj ET
+BT /F1 10.5 Tf 72 405 Td (* Map processing: loads the indoor occupancy map, aligns it with the simulator) Tj ET
+BT /F1 10.5 Tf 54 388 Td (coordinate frame, and inflates obstacles for planning clearance.) Tj ET
+BT /F1 10.5 Tf 72 370 Td (* Global planning: generates a collision-free path using sampling-based) Tj ET
+BT /F1 10.5 Tf 54 353 Td (planners such as PRM, RRT, and BiRRT.) Tj ET
+BT /F1 10.5 Tf 72 335 Td (* Local tracking: optimizes the planned path and follows it with a Time Elastic) Tj ET
+BT /F1 10.5 Tf 54 318 Td (Band controller.) Tj ET
+BT /F1 10.5 Tf 54 295 Td (The ROS 2 assets under ros2_ws/ provide the corresponding Gazebo world,) Tj ET
+BT /F1 10.5 Tf 54 277 Td (robot spawn launch file, Nav2 localization launch file, and map configuration.) Tj ET
+BT /F2 14 Tf 54 246 Td (Planning Method) Tj ET
+BT /F1 10.5 Tf 54 219 Td (The final configuration uses a bidirectional RRT planner as the primary global) Tj ET
+BT /F1 10.5 Tf 54 201 Td (planner. BiRRT is suitable for this type of indoor map because it grows search) Tj ET
+BT /F1 10.5 Tf 54 183 Td (trees from both the start and goal states, which can reduce search time in) Tj ET
+BT /F1 10.5 Tf 54 165 Td (cluttered environments compared with a single-tree RRT.) Tj ET
+BT /F1 10.5 Tf 54 142 Td (The planner operates in SE\(2\), so each state contains x, y, and heading.) Tj ET
+BT /F1 10.5 Tf 54 124 Td (Collision checking is performed against a binary occupancy map. The path is then) Tj ET
+BT /F1 10.5 Tf 54 106 Td (post-processed with MATLAB's path optimization tools to reduce unnecessary) Tj ET
+BT /F1 10.5 Tf 54 88 Td (detours before trajectory tracking.) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 2694 >>
+stream
+BT /F2 14 Tf 54 730 Td (Control Method) Tj ET
+BT /F1 10.5 Tf 54 703 Td (The optimized global path is passed to a Time Elastic Band controller. The TEB) Tj ET
+BT /F1 10.5 Tf 54 685 Td (controller produces linear and angular velocity commands while respecting robot) Tj ET
+BT /F1 10.5 Tf 54 667 Td (shape, velocity limits, acceleration limits, lookahead time, and obstacle safety) Tj ET
+BT /F1 10.5 Tf 54 649 Td (margins. During execution, the current odometry and velocity are fed back into) Tj ET
+BT /F1 10.5 Tf 54 631 Td (the controller at a fixed control rate.) Tj ET
+BT /F1 10.5 Tf 54 608 Td (After reaching the goal position, the pipeline applies a final in-place heading) Tj ET
+BT /F1 10.5 Tf 54 590 Td (adjustment. This makes the final robot pose more deliberate than simply stopping) Tj ET
+BT /F1 10.5 Tf 54 572 Td (when the translational goal is reached.) Tj ET
+BT /F2 14 Tf 54 541 Td (Implementation Highlights) Tj ET
+BT /F1 10.5 Tf 54 514 Td (The MATLAB implementation keeps the final project workflow in) Tj ET
+BT /F1 10.5 Tf 54 496 Td (matlab/turtlebot3_navigation.m. The script contains the main configuration,) Tj ET
+BT /F1 10.5 Tf 54 478 Td (pipeline sequence, and conceptual structure of the project, while reusable) Tj ET
+BT /F1 10.5 Tf 54 460 Td (operations are implemented under matlab/+mobile_robotics/ so they are easy) Tj ET
+BT /F1 10.5 Tf 54 442 Td (to inspect, version, and maintain.) Tj ET
+BT /F2 14 Tf 54 411 Td (Repository Contents) Tj ET
+BT /F1 10.5 Tf 54 384 Td (matlab/) Tj ET
+BT /F1 10.5 Tf 54 366 Td (MATLAB navigation workflow, source package, occupancy map, and ROS callback) Tj ET
+BT /F1 10.5 Tf 54 348 Td (helper class.) Tj ET
+BT /F1 10.5 Tf 54 325 Td (ros2_ws/) Tj ET
+BT /F1 10.5 Tf 54 307 Td (ROS 2 TurtleBot3/Nav2/Gazebo package additions for the indoor simulation) Tj ET
+BT /F1 10.5 Tf 54 289 Td (world, map, model, and launch files.) Tj ET
+BT /F1 10.5 Tf 54 266 Td (docs/) Tj ET
+BT /F1 10.5 Tf 54 248 Td (This project report in reStructuredText and PDF form.) Tj ET
+BT /F2 14 Tf 54 217 Td (Limitations) Tj ET
+BT /F1 10.5 Tf 54 190 Td (The project is configured for a known simulated environment and assumes that the) Tj ET
+BT /F1 10.5 Tf 54 172 Td (TurtleBot3, Gazebo, Nav2, and MATLAB Robotics System Toolbox dependencies are) Tj ET
+BT /F1 10.5 Tf 54 154 Td (available. The planner and controller parameters are tuned for the included map) Tj ET
+BT /F1 10.5 Tf 54 136 Td (and may need adjustment for a different robot model, environment scale, or) Tj ET
+BT /F1 10.5 Tf 54 118 Td (sensor setup.) Tj ET
+BT /F2 14 Tf 54 87 Td (Conclusion) Tj ET
+BT /F1 10.5 Tf 54 60 Td (The project demonstrates a complete mobile-robot navigation stack built around) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 264 >>
+stream
+BT /F1 10.5 Tf 54 730 Td (ROS 2 communication and MATLAB planning tools. It keeps the robotics concepts) Tj ET
+BT /F1 10.5 Tf 54 712 Td (visible in source form while presenting the work as a maintainable engineering) Tj ET
+BT /F1 10.5 Tf 54 694 Td (project.) Tj ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 9 0 R >>
+endobj
+xref
+0 11
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000128 00000 n 
+0000000198 00000 n 
+0000000273 00000 n 
+0000003209 00000 n 
+0000003345 00000 n 
+0000006091 00000 n 
+0000006227 00000 n 
+0000006542 00000 n 
+trailer
+<< /Size 11 /Root 1 0 R >>
+startxref
+6679
+%%EOF
