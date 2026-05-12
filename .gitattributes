@@ -1,0 +1,12 @@
+*.mlx binary
+*.pdf binary
+*.pgm binary
+*.png binary
+*.dae text eol=lf
+*.world text eol=lf
+*.sdf text eol=lf
+*.yaml text eol=lf
+*.rst text eol=lf
+*.py text eol=lf
+*.m text eol=lf
+*.md text eol=lf
