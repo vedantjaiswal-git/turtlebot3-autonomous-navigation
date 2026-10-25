@@ -35,6 +35,14 @@ The figures below show the main stages produced by the MATLAB navigation pipelin
 | --- | --- |
 | ![Optimized path](media/optimized_path.png) | ![TEB tracking path](media/teb_tracking_path.png) |
 
+## Physical Robot Validation
+
+In addition to simulation-based development, the navigation pipeline was implemented and tested on a physical TurtleBot3 platform.
+
+The MATLAB and ROS 2 workflow was used to evaluate the developed path-planning and trajectory-following functionality on real robot hardware, including robot motion along generated trajectories.
+
+The repository includes the navigation implementation, simulation environment, and visual results from the project.
+
 ## Repository Layout
 
 ```text
